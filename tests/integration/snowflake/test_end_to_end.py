@@ -17,6 +17,7 @@ from snowshu.core.main import cli
 BASE_CONN='postgresql://snowshu:snowshu@integration-test:9999/{}'
 SNOWSHU_META_STRING=BASE_CONN.format('snowshu')
 SNOWSHU_DEVELOPMENT_STRING=BASE_CONN.format('snowshu_development')
+DOCKER_SPIN_UP_TIMEOUT = 5
 
 @pytest.fixture(scope="session", autouse=True)
 def end_to_end(docker_flush_session):
@@ -30,7 +31,7 @@ def end_to_end(docker_flush_session):
                           name='integration-test',
                           network='snowshu',
                           detach=True)
-    time.sleep(5) # the replica needs a second to initialize
+    time.sleep(DOCKER_SPIN_UP_TIMEOUT) # the replica needs a second to initialize
     return create_output
 
 def any_appearance_of(string,strings):
@@ -38,11 +39,11 @@ def any_appearance_of(string,strings):
 
 def test_reports_full_catalog_start(end_to_end):
     result_lines = end_to_end
-    assert any_appearance_of('Assessing full catalog...',result_lines)
+    assert any_appearance_of('Building filtered catalog...',result_lines)
 
-def test_finds_45_relations(end_to_end):
+def test_finds_n_relations(end_to_end):
     result_lines= end_to_end
-    assert any_appearance_of('Identified a total of 45 relations to sample based on the specified configurations.',result_lines)
+    assert any_appearance_of('Identified a total of 11 relations to sample based on the specified configurations.',result_lines)
 
 def test_replicates_order_items(end_to_end):
     result_lines = end_to_end
