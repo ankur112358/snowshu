@@ -16,9 +16,9 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: getting credentials from secret
+    - name: getting credentials from env secret # req authorization
       env:
-        CREDENTIALS: ${{ secrets.CREDENTIALS }}
+        CREDENTIALS: ${{ secrets.Snowflake.CREDENTIALS_FILE }}
       run: echo "$CREDENTIALS" | base64 --decode > tests/assets/integration/credentials.yml
     - name: Build the Docker image
       run: docker-compose up -d
