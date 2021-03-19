@@ -15,8 +15,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: getting credentials from env secret # req authorization
+    - name: Setup credentials
       env:
         CREDENTIALS: ${{ secrets.CREDENTIALS_FILE }}
       run: echo "$CREDENTIALS" | base64 --decode > tests/assets/integration/credentials.yml
