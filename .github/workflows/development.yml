@@ -26,6 +26,14 @@ jobs:
       env:
         CREDENTIALS: ${{ secrets.CREDENTIALS_FILE }}
       run: echo $CREDENTIALS
+    - name: why can i not see stuff
+      run: ls -la
+    - name: try again
+      run: echo $CREDENTIALS
+    - name: with ""
+      run: echo "$CREDENTIALS"
+    - name: safe bet
+      run: echo $SUPER_SECRET | echo "$SUPER_SECRET" | echo "gogo"
     - name: Create credentials file
       run: echo $CREDENTIALS | base64 --decode > tests/assets/integration/credentials.yml
     - name: Build the Docker image
