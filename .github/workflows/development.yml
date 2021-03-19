@@ -11,14 +11,14 @@ jobs:
   build-and-test:
 
     runs-on: ubuntu-latest
-
+    environment: Snowflake
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: getting credentials from env secret # req authorization
       env:
-        CREDENTIALS: ${{ secrets.Snowflake.CREDENTIALS_FILE }}
+        CREDENTIALS: ${{ secrets.CREDENTIALS_FILE }}
       run: echo "$CREDENTIALS" | base64 --decode > tests/assets/integration/credentials.yml
     - name: Build the Docker image
       run: docker-compose up -d
