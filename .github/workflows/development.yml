@@ -15,10 +15,16 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: super secret
+      env:
+        SUPER_SECRET: ${{ secrets.SuperSecret }}
+      run: |
+        echo "$SUPER_SECRET"
+
     - name: getting credentials from secret
       env:
         CREDENTIALS: ${{ secrets.CREDENTIALS_FILE }}
-    - name: STEP BY STEP
       run: echo $CREDENTIALS
     - name: Create credentials file
       run: echo $CREDENTIALS | base64 --decode > tests/assets/integration/credentials.yml
