@@ -20,7 +20,7 @@ jobs:
       env:
         SUPER_SECRET: ${{ secrets.SuperSecret }}
       run: |
-        echo "$SUPER_SECRET"
+        echo $SUPER_SECRET
 
     - name: getting credentials from secret
       env:
