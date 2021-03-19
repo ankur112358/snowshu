@@ -15,11 +15,13 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Inject credential file
+    - name: getting credentials from secret
       env:
         CREDENTIALS: ${{ secrets.CREDENTIALS_FILE }}
-      run: |
-        echo $CREDENTIALS | base64 --decode > tests/assets/integration/credentials.yml
+    - name: STEP BY STEP
+      run: echo $CREDENTIALS
+    - name: Create credentials file
+      run: echo $CREDENTIALS | base64 --decode > tests/assets/integration/credentials.yml
     - name: Build the Docker image
       run: docker-compose up -d
     - name: Run Linter
